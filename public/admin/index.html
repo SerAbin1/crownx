@@ -7,13 +7,21 @@
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
-  <script src="https://unpkg.com/decap-cms@3.3.3/dist/decap-cms.js"></script>
+  <!-- Explicit mount point prevents React DOM removeChild conflicts -->
+  <div id="nc-root"></div>
+  <script src="https://unpkg.com/decap-cms@^3.4.0/dist/decap-cms.js"></script>
   <script>
+    // Wait for the identity widget before initializing CMS
     if (window.netlifyIdentity) {
-      window.netlifyIdentity.on('init', function () { CMS.init() })
-    } else {
-      CMS.init()
+      window.netlifyIdentity.on('init', function (user) {
+        if (!user) {
+          window.netlifyIdentity.on('login', function () {
+            document.location.href = '/admin/';
+          });
+        }
+      });
     }
+    // Let Decap CMS auto-init by mounting into #nc-root
   </script>
 </body>
 </html>

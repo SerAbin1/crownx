@@ -23,7 +23,11 @@ collections:
       - { label: Brand, name: brand, widget: string }
       - { label: Model, name: model, widget: string }
       - { label: Main Image, name: image, widget: image }
-      - { label: Gallery, name: gallery, widget: image, multiple: true, required: false }
+      - label: Gallery
+        name: gallery
+        widget: list
+        required: false
+        field: { label: Image, name: image, widget: image }
       - {
           label: Fuel Type,
           name: fuel,
