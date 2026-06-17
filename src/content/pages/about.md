@@ -3,21 +3,21 @@ title: "About Us"
 order: 1
 ---
 
-## Your Trusted Leasing Partner
+## Your Trusted Leasing Marketplace
 
-CrownX Leasing has been providing premium car leasing solutions in India since 2020. We specialize in offering flexible, transparent, and affordable leasing options for both individuals and businesses.
+CrownX is a peer-to-peer car leasing marketplace in India. We specialize in connecting vehicle owners (lessors) with everyday drivers (lessees), providing flexible, transparent, and affordable leasing options for everyone.
 
 ### Why Choose CrownX?
 
-- **Wide Selection:** From luxury sedans to electric SUVs, we have the perfect car for every need.
+- **Everyday Vehicles:** From reliable hatchbacks to family SUVs, find normal everyday use cars for your regular needs.
 - **Flexible Terms:** Choose from 12 to 60-month lease terms with customized mileage packages.
-- **All-Inclusive:** Insurance, registration, and maintenance included in your monthly payment.
-- **Hassle-Free:** We handle the paperwork, RTO registration, and road tax.
+- **All-Inclusive Options:** Connect with lessors offering packages that include insurance, registration, and maintenance.
+- **Hassle-Free:** We help facilitate the agreements, coordination, and verification between lessors and lessees.
 - **Pan-India:** Service available in 25+ cities across India.
 
 ### Our Mission
 
-To make premium mobility accessible and affordable for everyone through innovative leasing solutions.
+To make everyday mobility accessible and affordable for everyone through innovative leasing solutions.
 
 ### Our Values
 

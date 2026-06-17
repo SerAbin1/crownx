@@ -9,23 +9,23 @@ interface Props {
 }
 
 const {
-  titleLine1 = "Premium Car Leasing,",
-  titleLine2 = "Simplified.",
-  description = "Bespoke lease agreements, an elite handpicked fleet, and seamless pan-India door-to-door delivery. Experience luxury automobiles on your own terms.",
+  titleLine1 = "Car Leasing,",
+  titleLine2 = "For Everyone.",
+  description = "We don't own a fleet. We connect lessors and lessees directly. Find, lease, and drive reliable everyday vehicles on flexible terms with absolute ease.",
 } = Astro.props
 ---
 
 <section class="hero">
   <div class="container">
     <div class="hero-content">
-      <span class="hero-tag">Curated Automotive Leasing</span>
+      <span class="hero-tag">P2P Car Leasing Marketplace</span>
       <h1>{titleLine1}<br/><span class="blue">{titleLine2}</span></h1>
       <p class="hero-desc">{description}</p>
       <div class="hero-actions">
-        <a href="/cars" class="btn-explore">Explore Fleet</a>
+        <a href="/cars" class="btn-explore">Browse Cars</a>
         <WhatsAppButton
           number={SITE.whatsapp}
-          text="Hi, I'm interested in leasing a luxury car with CrownX"
+          text="Hi, I'm interested in leasing a car on CrownX"
           label="Inquire Now"
           variant="outline-white"
         />

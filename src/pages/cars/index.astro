@@ -8,20 +8,20 @@ const sorted = allCars.sort((a, b) => a.data.order - b.data.order)
 const totalCount = sorted.length
 ---
 
-<Base title="Our Cars" description="Browse the CrownX curated fleet of luxury vehicles available for lease across India.">
+<Base title="Browse Cars" description="Browse everyday vehicles available for lease from independent lessors across India on the CrownX marketplace.">
   <!-- Page Hero Banner -->
   <section class="fleet-hero">
     <div class="container">
       <div class="fleet-hero-inner">
         <span class="hero-kicker">The Collection</span>
-        <h1>Our <span class="gold">Fleet</span></h1>
+        <h1>Available <span class="gold">Cars</span></h1>
         <p class="hero-lead">
-          A hand-curated selection of premium automobiles, each inspected and prepared to the highest standard. Browse, compare, and find the vehicle that speaks to you.
+          Normal, everyday use vehicles listed by lessors near you. Browse, compare, and connect to find the perfect car for your daily needs.
         </p>
         <div class="hero-meta">
-          <span class="meta-item">{totalCount} Vehicles Available</span>
+          <span class="meta-item">{totalCount} Cars Listed</span>
           <span class="meta-sep">&mdash;</span>
-          <span class="meta-item">Pan-India Delivery</span>
+          <span class="meta-item">Verified Owners</span>
         </div>
       </div>
     </div>
@@ -35,8 +35,8 @@ const totalCount = sorted.length
           ? <CarGrid cars={sorted} />
           : (
             <div class="empty">
-              <h2>Fleet Coming Soon</h2>
-              <p>Our collection is being prepared. Reach out to us directly for early access to our upcoming vehicles.</p>
+              <h2>Listings Coming Soon</h2>
+              <p>Cars are being verified and listed. Reach out to us directly if you want to list your car or find early access vehicles.</p>
               <a href="/contact" class="btn btn-outline">Get In Touch</a>
             </div>
           )

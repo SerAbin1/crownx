@@ -56,3 +56,20 @@ collections:
       - { label: Featured, name: featured, widget: boolean, default: false, required: false }
       - { label: Display Order, name: order, widget: number, default: 0, required: false }
       - { label: Description, name: body, widget: markdown }
+
+  - name: pages
+    label: Pages
+    label_singular: Page
+    folder: src/content/pages
+    create: false
+    delete: false
+    format: frontmatter
+    slug: "{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Display Order, name: order, widget: number, default: 0 }
+      - { label: Logo Image, name: logoImage, widget: image, required: false }
+      - { label: Hero Title Line 1, name: heroTitleLine1, widget: string, required: false }
+      - { label: Hero Title Line 2, name: heroTitleLine2, widget: string, required: false }
+      - { label: Hero Description, name: heroDescription, widget: text, required: false }
+      - { label: Body, name: body, widget: markdown, required: false }
