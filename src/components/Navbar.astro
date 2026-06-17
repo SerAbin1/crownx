@@ -1,0 +1,107 @@
+---
+import { getCollection } from 'astro:content'
+
+const pages = await getCollection('pages')
+const sorted = pages.sort((a, b) => a.data.order - b.data.order)
+---
+
+<nav class="navbar">
+  <div class="container">
+    <a href="/" class="logo">CrownX Leasing</a>
+    <button class="menu-toggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/cars">Cars</a></li>
+      {sorted.map((page) => (
+        <li><a href={`/${page.id}`}>{page.data.title}</a></li>
+      ))}
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .navbar {
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .logo {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #1e3a5f;
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: #4b5563;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color 0.15s;
+  }
+  .nav-links a:hover {
+    color: #1e3a5f;
+  }
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .menu-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #1e3a5f;
+    border-radius: 2px;
+  }
+  @media (max-width: 768px) {
+    .menu-toggle {
+      display: flex;
+    }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 64px;
+      left: 0;
+      right: 0;
+      background: #fff;
+      flex-direction: column;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #e5e7eb;
+      gap: 1rem;
+    }
+    .nav-links.open {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  document.querySelector('.menu-toggle')?.addEventListener('click', () => {
+    document.querySelector('.nav-links')?.classList.toggle('open')
+  })
+</script>

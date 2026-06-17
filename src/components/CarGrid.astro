@@ -1,0 +1,27 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import CarCard from './CarCard.astro'
+
+export interface Props {
+  cars: CollectionEntry<'cars'>[]
+}
+
+const { cars } = Astro.props
+---
+
+<div class="grid">
+  {cars.map((car) => <CarCard car={car} />)}
+</div>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  @media (max-width: 400px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

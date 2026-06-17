@@ -1,0 +1,88 @@
+---
+import Base from '../layouts/Base.astro'
+import WhatsAppButton from '../components/WhatsAppButton.tsx'
+import { getCollection, render } from 'astro:content'
+
+const pages = await getCollection('pages')
+const page = pages.find((p) => p.id === 'contact')
+
+const { Content } = page ? await render(page) : {}
+---
+
+{page ? (
+  <Base title={page.data.title}>
+    <section class="page-section">
+      <div class="container">
+        <h1 class="page-title">{page.data.title}</h1>
+        <div class="contact-layout">
+          <div class="prose"><Content /></div>
+          <div class="contact-whatsapp">
+            <h3>Chat with Us</h3>
+            <p>Get an instant response from our team on WhatsApp.</p>
+            <WhatsAppButton
+              number="919999999999"
+              text="Hi, I'd like to inquire about car leasing"
+              label="Start WhatsApp Chat"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  </Base>
+) : (
+  <Base title="Contact Us">
+    <div class="container page-section"><p>Page not found.</p></div>
+  </Base>
+)}
+
+<style>
+  .page-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #111827;
+    margin: 0 0 1.5rem;
+  }
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 2rem;
+    align-items: start;
+  }
+  .contact-whatsapp {
+    background: #f0faf0;
+    border: 1px solid #bbf7d0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+  .contact-whatsapp h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.15rem;
+    color: #166534;
+  }
+  .contact-whatsapp p {
+    margin: 0 0 1rem;
+    font-size: 0.9rem;
+    color: #15803d;
+  }
+  .contact-whatsapp :global(.whatsapp-btn) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #25D366;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .contact-whatsapp :global(.whatsapp-btn:hover) {
+    background: #20bd5a;
+  }
+  @media (max-width: 768px) {
+    .contact-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
