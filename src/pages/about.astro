@@ -6,16 +6,282 @@ const { page, Content } = await getPage('about')
 ---
 
 {page && Content ? (
-  <Base title={page.data.title}>
-    <section class="page-section">
+  <Base title={page.data.title} description="Learn about CrownX Leasing — India's premium car leasing company offering flexible terms and a curated luxury fleet.">
+    <!-- Page Hero -->
+    <section class="about-hero">
       <div class="container">
-        <h1 class="page-title">{page.data.title}</h1>
-        <div class="prose"><Content /></div>
+        <div class="about-hero-inner">
+          <span class="hero-kicker">Who We Are</span>
+          <h1>About <span class="gold">CrownX</span></h1>
+          <p class="hero-lead">
+            Redefining how India experiences luxury mobility — through curated vehicles, bespoke terms, and a philosophy rooted in simplicity.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Values Grid -->
+    <section class="values-section">
+      <div class="container">
+        <div class="values-grid">
+          <div class="value-item">
+            <span class="value-num">01</span>
+            <h3>Transparency</h3>
+            <p>No hidden fees, no surprises. Every cost is presented upfront, so you can make decisions with complete clarity and confidence.</p>
+          </div>
+          <div class="value-item">
+            <span class="value-num">02</span>
+            <h3>Trust</h3>
+            <p>We build lasting relationships with our clients through consistent quality, reliable service, and genuine care for your experience.</p>
+          </div>
+          <div class="value-item">
+            <span class="value-num">03</span>
+            <h3>Excellence</h3>
+            <p>Every touchpoint — from vehicle selection to delivery logistics — is refined to meet the highest standards of premium service.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Content from CMS -->
+    <section class="about-content-section">
+      <div class="container">
+        <div class="about-content-layout">
+          <div class="content-sidebar">
+            <span class="sidebar-label">The Details</span>
+          </div>
+          <div class="prose about-prose">
+            <Content />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission Statement -->
+    <section class="mission-section">
+      <div class="container">
+        <div class="mission-inner">
+          <span class="mission-kicker">Our Mission</span>
+          <blockquote>
+            To make premium mobility accessible and affordable for everyone through innovative, transparent leasing solutions.
+          </blockquote>
+        </div>
       </div>
     </section>
   </Base>
 ) : (
   <Base title="About Us">
-    <div class="container page-section"><p>Page not found.</p></div>
+    <section class="about-hero">
+      <div class="container">
+        <div class="about-hero-inner">
+          <h1>About <span class="gold">CrownX</span></h1>
+          <p class="hero-lead">Page content not found.</p>
+        </div>
+      </div>
+    </section>
   </Base>
 )}
+
+<style>
+  /* Hero */
+  .about-hero {
+    padding: 6rem 0 5rem;
+    border-bottom: 1px solid var(--border-hairline);
+    background: var(--bg-primary);
+  }
+
+  .about-hero-inner {
+    max-width: 700px;
+  }
+
+  .hero-kicker {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent-gold);
+    display: block;
+    margin-bottom: 1.25rem;
+  }
+
+  .about-hero h1 {
+    font-family: var(--font-sans);
+    font-size: 3.75rem;
+    font-weight: 800;
+    line-height: 1.08;
+    margin: 0 0 1.5rem;
+    color: var(--text-primary);
+    letter-spacing: -0.03em;
+  }
+
+  .about-hero h1 .gold {
+    color: var(--accent-gold);
+  }
+
+  .hero-lead {
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    margin: 0;
+    max-width: 540px;
+  }
+
+  /* Values Grid */
+  .values-section {
+    padding: 6rem 0;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-hairline);
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .value-item {
+    padding: 3rem 2.5rem;
+    border-right: 1px solid var(--border-hairline);
+  }
+
+  .value-item:last-child {
+    border-right: none;
+  }
+
+  .value-num {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    display: block;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .value-item h3 {
+    font-family: var(--font-sans);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 0.75rem;
+    color: var(--text-primary);
+  }
+
+  .value-item p {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  /* Content Section */
+  .about-content-section {
+    padding: 6rem 0;
+    border-bottom: 1px solid var(--border-hairline);
+  }
+
+  .about-content-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .sidebar-label {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent-gold);
+    position: sticky;
+    top: 100px;
+  }
+
+  .about-prose {
+    max-width: 720px;
+  }
+
+  /* Mission */
+  .mission-section {
+    padding: 8rem 0;
+    background: var(--bg-primary);
+    text-align: center;
+  }
+
+  .mission-inner {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .mission-kicker {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent-gold);
+    display: block;
+    margin-bottom: 2rem;
+  }
+
+  .mission-section blockquote {
+    font-family: var(--font-sans);
+    font-size: 1.75rem;
+    font-style: normal;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-primary);
+    line-height: 1.4;
+  }
+
+  @media (max-width: 1024px) {
+    .value-item {
+      padding: 2rem 1.5rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .about-hero {
+      padding: 4rem 0 3.5rem;
+    }
+    .about-hero h1 {
+      font-size: 2.75rem;
+    }
+
+    .values-section {
+      padding: 0;
+    }
+    .values-grid {
+      grid-template-columns: 1fr;
+    }
+    .value-item {
+      border-right: none;
+      border-bottom: 1px solid var(--border-hairline);
+      padding: 2.5rem 0;
+    }
+    .value-item:last-child {
+      border-bottom: none;
+    }
+
+    .about-content-section {
+      padding: 4rem 0;
+    }
+    .about-content-layout {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    .sidebar-label {
+      position: static;
+    }
+
+    .mission-section {
+      padding: 5rem 0;
+    }
+    .mission-section blockquote {
+      font-size: 1.35rem;
+    }
+  }
+</style>

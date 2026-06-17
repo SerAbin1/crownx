@@ -1,13 +1,27 @@
 ---
-import { getCollection } from 'astro:content'
+import { getCollection, getEntry } from 'astro:content'
 
 const pages = await getCollection('pages')
-const sorted = pages.sort((a, b) => a.data.order - b.data.order)
+const sorted = pages
+  .filter((page) => page.id !== 'home')
+  .sort((a, b) => a.data.order - b.data.order)
+
+const homePage = await getEntry('pages', 'home')
+const logoImage = homePage?.data.logoImage
 ---
 
 <nav class="navbar">
   <div class="container">
-    <a href="/" class="logo">CrownX Leasing</a>
+    <a href="/" class="logo">
+      {logoImage ? (
+        <img src={logoImage} alt="CrownX Logo" class="logo-img" />
+      ) : (
+        <>
+          <span class="logo-icon">&#8226;</span>
+          CrownX
+        </>
+      )}
+    </a>
     <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -23,61 +37,108 @@ const sorted = pages.sort((a, b) => a.data.order - b.data.order)
 
 <style>
   .navbar {
-    background: #fff;
-    border-bottom: 1px solid #e5e7eb;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-hairline);
     position: sticky;
     top: 0;
     z-index: 100;
+    backdrop-filter: blur(10px);
+    background: rgba(250, 249, 245, 0.85); /* Alabaster with transparency */
   }
   .container {
-    max-width: 1200px;
+    max-width: 1320px;
     margin: 0 auto;
-    padding: 0 1.5rem;
+    padding: 0 2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 64px;
+    height: 72px;
   }
   .logo {
+    font-family: var(--font-sans);
     font-size: 1.35rem;
     font-weight: 700;
-    color: #1e3a5f;
+    color: var(--text-primary);
     text-decoration: none;
-    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .logo-img {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+  }
+  .logo-icon {
+    color: var(--accent-gold);
+    font-size: 1.5rem;
+    line-height: 1;
   }
   .nav-links {
     display: flex;
-    gap: 2rem;
+    gap: 3rem;
     list-style: none;
     margin: 0;
     padding: 0;
+    align-items: center;
   }
   .nav-links a {
     text-decoration: none;
-    color: #4b5563;
+    color: var(--text-secondary);
     font-weight: 500;
-    font-size: 0.95rem;
-    transition: color 0.15s;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    transition: color var(--transition);
+    position: relative;
+    padding: 0.5rem 0;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--accent-gold);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--transition);
   }
   .nav-links a:hover {
-    color: #1e3a5f;
+    color: var(--text-primary);
+  }
+  .nav-links a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
   }
   .menu-toggle {
     display: none;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 4px;
+    padding: 6px;
   }
   .menu-toggle span {
     display: block;
-    width: 24px;
-    height: 2px;
-    background: #1e3a5f;
-    border-radius: 2px;
-    transition: opacity 0.15s;
+    width: 20px;
+    height: 1px;
+    background: var(--text-primary);
+    transition: all var(--transition);
+  }
+  .menu-toggle.open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .menu-toggle.open span:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle.open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
   }
   @media (max-width: 768px) {
     .menu-toggle {
@@ -86,34 +147,38 @@ const sorted = pages.sort((a, b) => a.data.order - b.data.order)
     .nav-links {
       display: none;
       position: absolute;
-      top: 64px;
+      top: 72px;
       left: 0;
       right: 0;
-      background: #fff;
+      background: var(--bg-primary);
       flex-direction: column;
-      padding: 1rem 1.5rem;
-      border-bottom: 1px solid #e5e7eb;
-      gap: 1rem;
+      padding: 2rem;
+      gap: 1.5rem;
+      border-bottom: 1px solid var(--border-hairline);
     }
     .nav-links.open {
       display: flex;
+    }
+    .nav-links a::after {
+      display: none;
     }
   }
 </style>
 
 <script>
-  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle')
-  const navLinks = document.querySelector<HTMLElement>('.nav-links')
+  const toggle = document.querySelector('.menu-toggle')
+  const navLinks = document.querySelector('.nav-links')
 
   toggle?.addEventListener('click', () => {
     const isOpen = navLinks?.classList.toggle('open')
+    toggle.classList.toggle('open')
     toggle.setAttribute('aria-expanded', String(isOpen))
   })
 
-  // Close menu when any nav link is clicked (important for client-side navigation)
   navLinks?.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', () => {
       navLinks.classList.remove('open')
+      toggle?.classList.remove('open')
       toggle?.setAttribute('aria-expanded', 'false')
     })
   })

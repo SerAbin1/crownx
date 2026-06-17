@@ -5,7 +5,7 @@ price: 189000
 wasPrice: 215000
 brand: BMW
 model: X5
-image: /images/img_20260527_112432.jpg
+image: /images/bmw_x5.png
 fuel: petrol
 transmission: auto
 seats: 5

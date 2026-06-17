@@ -1,6 +1,5 @@
 ---
 import Base from '../../layouts/Base.astro'
-import WhatsAppButton from '../../components/WhatsAppButton.astro'
 import { formatPrice } from '../../utils/formatPrice'
 import { getCollection, render } from 'astro:content'
 
@@ -15,50 +14,96 @@ export async function getStaticPaths() {
 const { car } = Astro.props
 const { Content } = await render(car)
 const { data } = car
+
+const whatsappUrl = `https://wa.me/${data.whatsappNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(data.whatsappText ?? "Hi, I'm interested in leasing this car")}`
 ---
 
-<Base title={data.title}>
-  <section class="page-section">
-    <div class="container detail-layout">
-      <div class="gallery">
-        <!-- fetchpriority=high: this image is above the fold, don't lazy-load it -->
-        <img
-          src={data.image}
-          alt={data.title}
-          class="main-image"
-          fetchpriority="high"
-        />
-        {data.gallery && data.gallery.length > 0 && (
-          <div class="thumbnails">
-            {data.gallery.map((img) => <img src={img} alt="" loading="lazy" />)}
+<Base title={data.title} description={`Lease the ${data.title} — ${data.year} ${data.fuel} ${data.transmission}. Starting at ${formatPrice(data.price)}/month.`}>
+  <!-- Breadcrumb -->
+  <section class="breadcrumb-bar">
+    <div class="container">
+      <a href="/cars" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M19 12H5M12 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Back to Fleet
+      </a>
+    </div>
+  </section>
+
+  <!-- Detail Layout -->
+  <section class="detail-section">
+    <div class="container">
+      <div class="detail-layout">
+        <!-- Gallery Column -->
+        <div class="gallery">
+          <div class="main-image-wrap">
+            <img
+              src={data.image}
+              alt={data.title}
+              class="main-image"
+              fetchpriority="high"
+            />
           </div>
-        )}
-      </div>
-      <div class="info">
-        <h1 class="title">{data.title}</h1>
-        <div class="specs">
-          <div class="spec"><span class="label">Year</span><span>{data.year}</span></div>
-          <div class="spec"><span class="label">Fuel</span><span class="cap">{data.fuel}</span></div>
-          <div class="spec"><span class="label">Transmission</span><span class="cap">{data.transmission}</span></div>
-          <div class="spec"><span class="label">Seats</span><span>{data.seats}</span></div>
+          {data.gallery && data.gallery.length > 0 && (
+            <div class="thumbnails">
+              {data.gallery.map((img) => <img src={img} alt="" loading="lazy" />)}
+            </div>
+          )}
         </div>
-        <div class="pricing">
-          {data.wasPrice && <span class="was-price">{formatPrice(data.wasPrice)}</span>}
-          <div class="current-price">
-            <span class="amount">{formatPrice(data.price)}</span>
-            <span class="per">/month</span>
+
+        <!-- Info Column -->
+        <div class="info">
+          <div class="info-header">
+            <span class="info-kicker">{data.brand} &middot; {data.year}</span>
+            <h1 class="title">{data.title}</h1>
           </div>
-          <p class="include">Insurance, registration &amp; maintenance included</p>
-        </div>
-        <div class="actions">
-          <WhatsAppButton
-            number={data.whatsappNumber}
-            text={data.whatsappText}
-            label="Inquire on WhatsApp"
-          />
-        </div>
-        <div class="description prose">
-          <Content />
+
+          <!-- Specs Grid -->
+          <div class="specs">
+            <div class="spec">
+              <span class="spec-label">Year</span>
+              <span class="spec-value">{data.year}</span>
+            </div>
+            <div class="spec">
+              <span class="spec-label">Fuel</span>
+              <span class="spec-value cap">{data.fuel}</span>
+            </div>
+            <div class="spec">
+              <span class="spec-label">Transmission</span>
+              <span class="spec-value cap">{data.transmission}</span>
+            </div>
+            <div class="spec">
+              <span class="spec-label">Seats</span>
+              <span class="spec-value">{data.seats}</span>
+            </div>
+          </div>
+
+          <!-- Pricing Block -->
+          <div class="pricing">
+            <div class="pricing-header">
+              <span class="pricing-label">Monthly Lease Rate</span>
+            </div>
+            {data.wasPrice && <span class="was-price">{formatPrice(data.wasPrice)}</span>}
+            <div class="current-price">
+              <span class="amount">{formatPrice(data.price)}</span>
+              <span class="per">/ month</span>
+            </div>
+            <p class="include">Insurance, registration &amp; scheduled maintenance included</p>
+          </div>
+
+          <!-- CTA -->
+          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="inquire-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Inquire on WhatsApp
+          </a>
+
+          <!-- Description / Prose -->
+          <div class="description prose">
+            <Content />
+          </div>
         </div>
       </div>
     </div>
@@ -66,124 +111,302 @@ const { data } = car
 </Base>
 
 <style>
+  /* Breadcrumb */
+  .breadcrumb-bar {
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border-hairline);
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: color var(--transition);
+  }
+
+  .back-link:hover {
+    color: var(--text-primary);
+  }
+
+  .back-link svg {
+    transition: transform var(--transition);
+  }
+
+  .back-link:hover svg {
+    transform: translateX(-3px);
+  }
+
+  /* Detail Section */
+  .detail-section {
+    padding: 4rem 0 8rem;
+  }
+
   .detail-layout {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 5rem;
     align-items: start;
   }
+
+  /* Gallery */
   .gallery {
     position: sticky;
-    top: 80px;
+    top: 92px;
   }
+
+  .main-image-wrap {
+    overflow: hidden;
+    border: 1px solid var(--border-hairline);
+    padding: 1rem;
+    background: var(--bg-secondary);
+  }
+
   .main-image {
     width: 100%;
     aspect-ratio: 16 / 10;
     object-fit: cover;
-    border-radius: 12px;
-    background: #f3f4f6;
+    background: #e5dfd5;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   }
+
+  .main-image-wrap:hover .main-image {
+    transform: scale(1.03);
+  }
+
   .thumbnails {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.75rem;
     margin-top: 0.75rem;
   }
+
   .thumbnails img {
     width: 80px;
     height: 60px;
     object-fit: cover;
-    border-radius: 6px;
     cursor: pointer;
-    border: 2px solid transparent;
-    transition: border-color 0.15s;
+    border: 1px solid var(--border-hairline);
+    padding: 3px;
+    background: var(--bg-secondary);
+    transition: border-color var(--transition);
   }
+
   .thumbnails img:hover,
   .thumbnails img.active {
-    border-color: #1e3a5f;
+    border-color: var(--text-primary);
   }
+
+  /* Info Column */
+  .info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .info-kicker {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent-gold);
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+
   .title {
-    font-size: 2rem;
+    font-family: var(--font-sans);
+    font-size: 2.5rem;
     font-weight: 800;
-    color: #111827;
-    margin: 0 0 1.5rem;
+    color: var(--text-primary);
+    margin: 0 0 2rem;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
   }
+
+  /* Specs */
   .specs {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
+    gap: 0;
+    margin-bottom: 2.5rem;
+    border: 1px solid var(--border-hairline);
   }
+
   .spec {
-    background: #f3f4f6;
-    padding: 0.65rem 1rem;
-    border-radius: 8px;
+    padding: 1rem 1.25rem;
     display: flex;
     justify-content: space-between;
-    font-size: 0.9rem;
+    align-items: center;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--border-hairline);
   }
-  .label {
-    color: #6b7280;
+
+  .spec:nth-child(odd) {
+    border-right: 1px solid var(--border-hairline);
+  }
+
+  .spec:nth-last-child(-n+2) {
+    border-bottom: none;
+  }
+
+  .spec-label {
+    color: var(--muted);
     font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.7rem;
   }
-  .cap { text-transform: capitalize; }
+
+  .spec-value {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .cap {
+    text-transform: capitalize;
+  }
+
+  /* Pricing */
   .pricing {
-    margin-bottom: 1.5rem;
-    padding: 1.25rem;
-    background: #f0faf0;
-    border: 1px solid #bbf7d0;
-    border-radius: 10px;
+    margin-bottom: 2.5rem;
+    padding: 2rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-hairline);
   }
+
+  .pricing-header {
+    margin-bottom: 0.75rem;
+  }
+
+  .pricing-label {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent-gold);
+  }
+
   .was-price {
     display: block;
     text-decoration: line-through;
-    color: #9ca3af;
-    font-size: 1rem;
-    margin-bottom: 0.25rem;
+    color: var(--muted);
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    margin-bottom: 0.2rem;
   }
+
   .current-price {
     display: flex;
     align-items: baseline;
     gap: 0.4rem;
   }
+
   .amount {
-    font-size: 2.25rem;
-    font-weight: 800;
-    color: #166534;
+    font-family: var(--font-sans);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
   }
+
   .per {
-    font-size: 1rem;
-    color: #15803d;
-    font-weight: 500;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    font-weight: 400;
   }
+
   .include {
-    margin: 0.5rem 0 0;
+    margin: 0.75rem 0 0;
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* CTA Button */
+  .inquire-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1.15rem 2rem;
+    font-family: var(--font-sans);
+    font-weight: 500;
     font-size: 0.85rem;
-    color: #15803d;
-  }
-  .actions {
-    margin-bottom: 1.5rem;
-  }
-  .actions :global(.whatsapp-btn) {
-    padding: 0.85rem 2rem;
-    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    background: var(--text-primary);
+    color: var(--white);
+    border: 1px solid var(--text-primary);
     width: 100%;
+    transition: all var(--transition);
+    cursor: pointer;
+    margin-bottom: 3rem;
   }
+
+  .inquire-btn svg {
+    color: #25D366;
+    transition: color var(--transition);
+  }
+
+  .inquire-btn:hover {
+    background: transparent;
+    color: var(--text-primary);
+    transform: translateY(-2px);
+  }
+
+  .inquire-btn:hover svg {
+    color: var(--whatsapp-green);
+  }
+
+  /* Description */
   .description {
-    margin-top: 2rem;
+    margin-top: 0;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border-hairline);
   }
+
+  @media (max-width: 1024px) {
+    .detail-layout {
+      gap: 3rem;
+    }
+    .title {
+      font-size: 2.75rem;
+    }
+  }
+
   @media (max-width: 768px) {
+    .detail-section {
+      padding: 2.5rem 0 5rem;
+    }
     .detail-layout {
       grid-template-columns: 1fr;
-      gap: 1.5rem;
+      gap: 2.5rem;
     }
-    .gallery { position: static; }
+    .gallery {
+      position: static;
+    }
+    .title {
+      font-size: 2.25rem;
+    }
+    .amount {
+      font-size: 2rem;
+    }
   }
 </style>
 
 <script>
-  // Fixed: thumbnails stay stable, only main image src changes
-  const main = document.querySelector<HTMLImageElement>('.main-image')
-  const thumbs = document.querySelectorAll<HTMLImageElement>('.thumbnails img')
+  const main = document.querySelector('.main-image') as HTMLImageElement | null
+  const thumbs = document.querySelectorAll('.thumbnails img') as NodeListOf<HTMLImageElement>
 
   thumbs.forEach((thumb) => {
     thumb.addEventListener('click', () => {

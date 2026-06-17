@@ -16,12 +16,21 @@ const { cars } = Astro.props
 <style>
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    column-gap: 3rem;
+    row-gap: 5rem;
   }
-  @media (max-width: 400px) {
+  @media (max-width: 768px) {
+    .grid {
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      column-gap: 1.5rem;
+      row-gap: 3.5rem;
+    }
+  }
+  @media (max-width: 480px) {
     .grid {
       grid-template-columns: 1fr;
+      row-gap: 3rem;
     }
   }
 </style>

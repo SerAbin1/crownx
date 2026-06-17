@@ -1,82 +1,149 @@
 ---
 import { SITE } from '../config'
 import WhatsAppButton from './WhatsAppButton.astro'
+
+interface Props {
+  titleLine1?: string
+  titleLine2?: string
+  description?: string
+}
+
+const {
+  titleLine1 = "Premium Car Leasing,",
+  titleLine2 = "Simplified.",
+  description = "Bespoke lease agreements, an elite handpicked fleet, and seamless pan-India door-to-door delivery. Experience luxury automobiles on your own terms.",
+} = Astro.props
 ---
 
 <section class="hero">
   <div class="container">
-    <h1>Drive Your Dream Car Today</h1>
-    <p>Premium car leasing with flexible terms, all-inclusive packages, and pan-India delivery.</p>
-    <div class="hero-actions">
-      <a href="/cars" class="btn btn-primary">Browse Cars</a>
-      <WhatsAppButton
-        number={SITE.whatsapp}
-        text="Hi, I'm interested in leasing a car"
-        label="Chat on WhatsApp"
-      />
+    <div class="hero-content">
+      <span class="hero-tag">Curated Automotive Leasing</span>
+      <h1>{titleLine1}<br/><span class="blue">{titleLine2}</span></h1>
+      <p class="hero-desc">{description}</p>
+      <div class="hero-actions">
+        <a href="/cars" class="btn-explore">Explore Fleet</a>
+        <WhatsAppButton
+          number={SITE.whatsapp}
+          text="Hi, I'm interested in leasing a luxury car with CrownX"
+          label="Inquire Now"
+          variant="outline-white"
+        />
+      </div>
     </div>
   </div>
 </section>
 
 <style>
   .hero {
-    background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
-    color: #fff;
-    padding: 5rem 0;
-    text-align: center;
+    position: relative;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.95) 25%, rgba(0, 0, 0, 0.75) 50%, rgba(0, 0, 0, 0.1) 100%), url('/images/hero_car.png');
+    background-size: cover;
+    background-position: center right;
+    padding: 10rem 0 12rem;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    min-height: calc(100vh - 72px);
+    text-align: left;
   }
+  
+  .hero .container {
+    width: 100%;
+  }
+  
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 650px;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .hero-tag {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent-gold);
+    margin-bottom: 1.5rem;
+  }
+  
   h1 {
-    font-size: 2.75rem;
+    font-family: var(--font-sans);
+    font-size: 4.5rem;
     font-weight: 800;
-    margin: 0 0 1rem;
+    line-height: 1.08;
+    margin: 0 0 2rem;
+    color: var(--white);
     letter-spacing: -0.03em;
-    line-height: 1.15;
   }
-  .hero p {
-    font-size: 1.2rem;
-    max-width: 600px;
-    margin: 0 auto 2rem;
-    line-height: 1.6;
-    opacity: 0.9;
+  
+  .blue {
+    color: var(--accent-gold);
   }
+  
+  .hero-desc {
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.75);
+    margin: 0 0 3rem;
+    max-width: 520px;
+  }
+  
   .hero-actions {
     display: flex;
-    gap: 1rem;
-    justify-content: center;
+    gap: 1.25rem;
+    align-items: center;
     flex-wrap: wrap;
   }
-  .btn {
-    padding: 0.85rem 2rem;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 1rem;
-    text-decoration: none;
-    transition: all 0.2s;
+  
+  .btn-explore {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
+    background: var(--white);
+    color: var(--dark);
+    padding: 1rem 2.25rem;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    transition: all var(--transition);
+    border: 1px solid var(--white);
+    border-radius: var(--radius);
   }
-  .btn-primary {
-    background: #fff;
-    color: #1e3a5f;
+  
+  .btn-explore:hover {
+    background: transparent;
+    color: var(--white);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
   }
-  .btn-primary:hover {
-    background: #f0f4ff;
-    transform: translateY(-1px);
+  
+  @media (max-width: 1024px) {
+    h1 {
+      font-size: 4rem;
+    }
   }
-  /* WhatsApp button size override for hero context */
-  .hero-actions :global(.whatsapp-btn) {
-    padding: 0.85rem 2rem;
-    font-size: 1rem;
-    transform: none;
-    transition: background 0.2s, transform 0.2s;
-  }
-  .hero-actions :global(.whatsapp-btn:hover) {
-    transform: translateY(-1px);
-  }
-  @media (max-width: 640px) {
-    .hero { padding: 3rem 0; }
-    h1 { font-size: 2rem; }
-    .hero p { font-size: 1rem; }
+  
+  @media (max-width: 768px) {
+    .hero {
+      padding: 6rem 0 8rem;
+      background-position: 70% center;
+      background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.85) 60%, rgba(0, 0, 0, 0.95) 100%), url('/images/hero_car.png');
+    }
+    h1 {
+      font-size: 3.25rem;
+    }
+    .hero-desc {
+      font-size: 1rem;
+      margin-bottom: 2.5rem;
+    }
   }
 </style>

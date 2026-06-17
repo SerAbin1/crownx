@@ -19,13 +19,34 @@ const { title, description } = Astro.props
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="description" content={description ?? 'Premium car leasing in India'} />
+    <meta name="description" content={description ?? 'Premium car leasing in India — CrownX offers curated luxury vehicles with flexible lease terms and pan-India delivery.'} />
     <title>{title} | CrownX Leasing</title>
     <script is:inline>
       if (window.location.hash && window.location.hash.includes('_token=')) {
         window.location.href = '/admin/' + window.location.hash;
       }
     </script>
+    <style is:inline>
+      /* Scroll reveal animation system */
+      .reveal {
+        opacity: 0;
+        transform: translateY(32px);
+        transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Smooth page load fade-in */
+      body {
+        animation: fadeInPage 0.6s ease-out;
+      }
+      @keyframes fadeInPage {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+    </style>
   </head>
   <body>
     <Navbar />
@@ -33,5 +54,23 @@ const { title, description } = Astro.props
       <slot />
     </main>
     <Footer />
+    <script is:inline>
+      // Scroll-based reveal observer
+      document.addEventListener('DOMContentLoaded', () => {
+        const reveals = document.querySelectorAll('.reveal');
+        if (!reveals.length) return;
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        reveals.forEach((el) => observer.observe(el));
+      });
+    </script>
   </body>
 </html>

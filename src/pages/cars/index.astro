@@ -5,20 +5,39 @@ import { getCollection } from 'astro:content'
 
 const allCars = await getCollection('cars')
 const sorted = allCars.sort((a, b) => a.data.order - b.data.order)
+const totalCount = sorted.length
 ---
 
-<Base title="Our Cars">
-  <section class="page-section">
+<Base title="Our Cars" description="Browse the CrownX curated fleet of luxury vehicles available for lease across India.">
+  <!-- Page Hero Banner -->
+  <section class="fleet-hero">
     <div class="container">
-      <h1 class="page-title">Our Fleet</h1>
-      <p class="page-subtitle">Choose from a wide range of premium vehicles</p>
+      <div class="fleet-hero-inner">
+        <span class="hero-kicker">The Collection</span>
+        <h1>Our <span class="gold">Fleet</span></h1>
+        <p class="hero-lead">
+          A hand-curated selection of premium automobiles, each inspected and prepared to the highest standard. Browse, compare, and find the vehicle that speaks to you.
+        </p>
+        <div class="hero-meta">
+          <span class="meta-item">{totalCount} Vehicles Available</span>
+          <span class="meta-sep">&mdash;</span>
+          <span class="meta-item">Pan-India Delivery</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fleet Grid -->
+  <section class="fleet-grid-section">
+    <div class="container">
       {
         sorted.length > 0
           ? <CarGrid cars={sorted} />
           : (
             <div class="empty">
-              <p>No cars available right now. Check back soon or contact us for more information.</p>
-              <a href="/contact" class="btn">Contact Us</a>
+              <h2>Fleet Coming Soon</h2>
+              <p>Our collection is being prepared. Reach out to us directly for early access to our upcoming vehicles.</p>
+              <a href="/contact" class="btn btn-outline">Get In Touch</a>
             </div>
           )
       }
@@ -27,26 +46,101 @@ const sorted = allCars.sort((a, b) => a.data.order - b.data.order)
 </Base>
 
 <style>
-  .page-subtitle {
-    color: #6b7280;
-    margin: 0 0 2rem;
-    font-size: 1.1rem;
+  .fleet-hero {
+    padding: 6rem 0 5rem;
+    border-bottom: 1px solid var(--border-hairline);
+    background: var(--bg-primary);
   }
+
+  .fleet-hero-inner {
+    max-width: 720px;
+  }
+
+  .hero-kicker {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent-gold);
+    display: block;
+    margin-bottom: 1.25rem;
+  }
+
+  .fleet-hero h1 {
+    font-family: var(--font-sans);
+    font-size: 3.75rem;
+    font-weight: 800;
+    line-height: 1.08;
+    margin: 0 0 1.5rem;
+    color: var(--text-primary);
+    letter-spacing: -0.03em;
+  }
+
+  .fleet-hero h1 .gold {
+    color: var(--accent-gold);
+  }
+
+  .hero-lead {
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    margin: 0 0 2rem;
+    max-width: 560px;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+
+  .meta-sep {
+    color: var(--accent-gold);
+  }
+
+  .fleet-grid-section {
+    padding: 6rem 0 8rem;
+  }
+
   .empty {
     text-align: center;
-    padding: 4rem 0;
-    color: #6b7280;
+    padding: 6rem 0;
+    max-width: 480px;
+    margin: 0 auto;
   }
+
+  .empty h2 {
+    font-family: var(--font-sans);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 1rem;
+  }
+
   .empty p {
-    margin-bottom: 1.5rem;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin: 0 0 2.5rem;
   }
-  .btn {
-    display: inline-block;
-    padding: 0.75rem 1.75rem;
-    background: #1e3a5f;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 600;
+
+  @media (max-width: 768px) {
+    .fleet-hero {
+      padding: 4rem 0 3.5rem;
+    }
+    .fleet-hero h1 {
+      font-size: 2.75rem;
+    }
+    .fleet-grid-section {
+      padding: 4rem 0 5rem;
+    }
   }
 </style>

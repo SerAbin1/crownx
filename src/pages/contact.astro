@@ -8,15 +8,66 @@ const { page, Content } = await getPage('contact')
 ---
 
 {page && Content ? (
-  <Base title={page.data.title}>
-    <section class="page-section">
+  <Base title={page.data.title} description="Get in touch with CrownX Leasing. Schedule a consultation, inquire about our fleet, or chat with us on WhatsApp.">
+    <!-- Page Hero -->
+    <section class="contact-hero">
       <div class="container">
-        <h1 class="page-title">{page.data.title}</h1>
-        <div class="contact-layout">
-          <div class="prose"><Content /></div>
-          <div class="contact-whatsapp">
-            <h3>Chat with Us</h3>
-            <p>Get an instant response from our team on WhatsApp.</p>
+        <div class="contact-hero-inner">
+          <span class="hero-kicker">Get In Touch</span>
+          <h1>Contact <span class="gold">Us</span></h1>
+          <p class="hero-lead">
+            Whether you have a question about our fleet, need a bespoke lease quote, or simply want to say hello — we'd love to hear from you.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Info Grid -->
+    <section class="contact-grid-section">
+      <div class="container">
+        <div class="contact-grid">
+          <div class="contact-item">
+            <div class="contact-header-wrap">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <span class="contact-label">Address</span>
+            </div>
+            <p>CrownX Leasing Pvt. Ltd.<br/>3rd Floor, Business Hub<br/>Bandra Kurla Complex<br/>Mumbai — 400051</p>
+          </div>
+          <div class="contact-item">
+            <div class="contact-header-wrap">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              <span class="contact-label">Phone</span>
+            </div>
+            <p><a href={`tel:${SITE.whatsapp}`}>{SITE.whatsapp}</a></p>
+          </div>
+          <div class="contact-item">
+            <div class="contact-header-wrap">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              <span class="contact-label">Email</span>
+            </div>
+            <p><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+          </div>
+          <div class="contact-item">
+            <div class="contact-header-wrap">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="contact-icon"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              <span class="contact-label">Hours</span>
+            </div>
+            <p>Monday — Saturday: 10:00 AM – 7:00 PM<br/>Sunday: Closed</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WhatsApp CTA -->
+    <section class="whatsapp-section">
+      <div class="container">
+        <div class="whatsapp-layout">
+          <div class="whatsapp-text">
+            <span class="wa-kicker">Immediate Assistance</span>
+            <h2>Chat with our <span class="gold">leasing advisors</span></h2>
+            <p>Get an instant response from our team. We're available on WhatsApp during business hours for quick inquiries, lease quotes, and vehicle availability.</p>
+          </div>
+          <div class="whatsapp-action">
             <WhatsAppButton
               number={SITE.whatsapp}
               text="Hi, I'd like to inquire about car leasing"
@@ -26,40 +77,279 @@ const { page, Content } = await getPage('contact')
         </div>
       </div>
     </section>
+
+    <!-- CMS Content -->
+    {Content && (
+      <section class="cms-content-section">
+        <div class="container">
+          <div class="cms-layout">
+            <div class="cms-sidebar">
+              <span class="sidebar-label">Additional Info</span>
+            </div>
+            <div class="prose">
+              <Content />
+            </div>
+          </div>
+        </div>
+      </section>
+    )}
   </Base>
 ) : (
   <Base title="Contact Us">
-    <div class="container page-section"><p>Page not found.</p></div>
+    <section class="contact-hero">
+      <div class="container">
+        <div class="contact-hero-inner">
+          <h1>Contact <span class="gold">Us</span></h1>
+          <p class="hero-lead">Page content not found.</p>
+        </div>
+      </div>
+    </section>
   </Base>
 )}
 
 <style>
-  .contact-layout {
+  /* Hero */
+  .contact-hero {
+    padding: 6rem 0 5rem;
+    border-bottom: 1px solid var(--border-hairline);
+    background: var(--bg-primary);
+  }
+
+  .contact-hero-inner {
+    max-width: 700px;
+  }
+
+  .hero-kicker {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent-gold);
+    display: block;
+    margin-bottom: 1.25rem;
+  }
+
+  .contact-hero h1 {
+    font-family: var(--font-sans);
+    font-size: 3.75rem;
+    font-weight: 800;
+    line-height: 1.08;
+    margin: 0 0 1.5rem;
+    color: var(--text-primary);
+    letter-spacing: -0.03em;
+  }
+
+  .contact-hero h1 .gold {
+    color: var(--accent-gold);
+  }
+
+  .hero-lead {
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    margin: 0;
+    max-width: 540px;
+  }
+
+  /* Contact Info Grid */
+  .contact-grid-section {
+    padding: 0;
+    border-bottom: 1px solid var(--border-hairline);
+  }
+
+  .contact-grid {
     display: grid;
-    grid-template-columns: 1fr 320px;
-    gap: 2rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+
+  .contact-item {
+    padding: 3rem 2rem;
+    border-right: 1px solid var(--border-hairline);
+  }
+
+  .contact-item:last-child {
+    border-right: none;
+  }
+
+  .contact-header-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: var(--accent-gold);
+  }
+
+  .contact-icon {
+    flex-shrink: 0;
+  }
+
+  .contact-label {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent-gold);
+  }
+
+  .contact-item p {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  .contact-item a {
+    color: var(--text-primary);
+    font-weight: 500;
+    border-bottom: 1px solid var(--border-hairline);
+    padding-bottom: 2px;
+    transition: border-color var(--transition);
+  }
+
+  .contact-item a:hover {
+    border-color: var(--text-primary);
+  }
+
+  /* WhatsApp Section */
+  .whatsapp-section {
+    padding: 6rem 0;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-hairline);
+  }
+
+  .whatsapp-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .wa-kicker {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent-gold);
+    display: block;
+    margin-bottom: 1.25rem;
+  }
+
+  .whatsapp-text h2 {
+    font-family: var(--font-sans);
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin: 0 0 1.25rem;
+    line-height: 1.2;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  .whatsapp-text h2 .gold {
+    color: var(--accent-gold);
+  }
+
+  .whatsapp-text p {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin: 0;
+    max-width: 500px;
+  }
+
+  .whatsapp-action {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  /* CMS Content */
+  .cms-content-section {
+    padding: 6rem 0;
+    border-bottom: 1px solid var(--border-hairline);
+  }
+
+  .cms-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 4rem;
     align-items: start;
   }
-  .contact-whatsapp {
-    background: #f0faf0;
-    border: 1px solid #bbf7d0;
-    border-radius: 12px;
-    padding: 1.5rem;
-    text-align: center;
+
+  .sidebar-label {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent-gold);
+    position: sticky;
+    top: 100px;
   }
-  .contact-whatsapp h3 {
-    margin: 0 0 0.5rem;
-    font-size: 1.15rem;
-    color: #166534;
+
+  @media (max-width: 1024px) {
+    .contact-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .contact-item:nth-child(2) {
+      border-right: none;
+    }
+    .contact-item {
+      border-bottom: 1px solid var(--border-hairline);
+    }
+    .contact-item:nth-last-child(-n+2) {
+      border-bottom: none;
+    }
+    .whatsapp-layout {
+      gap: 3rem;
+    }
   }
-  .contact-whatsapp p {
-    margin: 0 0 1rem;
-    font-size: 0.9rem;
-    color: #15803d;
-  }
+
   @media (max-width: 768px) {
-    .contact-layout {
+    .contact-hero {
+      padding: 4rem 0 3.5rem;
+    }
+    .contact-hero h1 {
+      font-size: 2.75rem;
+    }
+
+    .contact-grid {
       grid-template-columns: 1fr;
+    }
+    .contact-item {
+      border-right: none;
+      border-bottom: 1px solid var(--border-hairline);
+      padding: 2rem 0;
+    }
+    .contact-item:last-child {
+      border-bottom: none;
+    }
+
+    .whatsapp-section {
+      padding: 4rem 0;
+    }
+    .whatsapp-layout {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .whatsapp-text h2 {
+      font-size: 1.85rem;
+    }
+
+    .cms-content-section {
+      padding: 4rem 0;
+    }
+    .cms-layout {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    .sidebar-label {
+      position: static;
     }
   }
 </style>

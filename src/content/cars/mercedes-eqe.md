@@ -4,7 +4,7 @@ year: 2025
 price: 165000
 brand: "Mercedes-Benz"
 model: "EQE"
-image: "/images/cars/mercedes-eqe.jpg"
+image: "/images/mercedes_eqe.png"
 fuel: "electric"
 transmission: "auto"
 seats: 5
