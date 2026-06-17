@@ -9,7 +9,11 @@
 <body>
   <script src="https://unpkg.com/decap-cms@^3/dist/decap-cms.js"></script>
   <script>
-    CMS.init()
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on('init', function () { CMS.init() })
+    } else {
+      CMS.init()
+    }
   </script>
 </body>
 </html>
