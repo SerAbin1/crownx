@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro'
-import WhatsAppButton from '../../components/WhatsAppButton.tsx'
+import WhatsAppButton from '../../components/WhatsAppButton.astro'
+import { formatPrice } from '../../utils/formatPrice'
 import { getCollection, render } from 'astro:content'
 
 export async function getStaticPaths() {
@@ -14,19 +15,22 @@ export async function getStaticPaths() {
 const { car } = Astro.props
 const { Content } = await render(car)
 const { data } = car
-
-const formatPrice = (price: number) =>
-  new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(price)
 ---
 
 <Base title={data.title}>
   <section class="page-section">
     <div class="container detail-layout">
       <div class="gallery">
-        <img src={data.image} alt={data.title} class="main-image" />
+        <!-- fetchpriority=high: this image is above the fold, don't lazy-load it -->
+        <img
+          src={data.image}
+          alt={data.title}
+          class="main-image"
+          fetchpriority="high"
+        />
         {data.gallery && data.gallery.length > 0 && (
           <div class="thumbnails">
-            {data.gallery.map((img) => <img src={img} alt="" />)}
+            {data.gallery.map((img) => <img src={img} alt="" loading="lazy" />)}
           </div>
         )}
       </div>
@@ -44,7 +48,7 @@ const formatPrice = (price: number) =>
             <span class="amount">{formatPrice(data.price)}</span>
             <span class="per">/month</span>
           </div>
-          <p class="include">Insurance, registration & maintenance included</p>
+          <p class="include">Insurance, registration &amp; maintenance included</p>
         </div>
         <div class="actions">
           <WhatsAppButton
@@ -93,7 +97,8 @@ const formatPrice = (price: number) =>
     border: 2px solid transparent;
     transition: border-color 0.15s;
   }
-  .thumbnails img:hover {
+  .thumbnails img:hover,
+  .thumbnails img.active {
     border-color: #1e3a5f;
   }
   .title {
@@ -155,21 +160,13 @@ const formatPrice = (price: number) =>
     font-size: 0.85rem;
     color: #15803d;
   }
-  .actions :global(.whatsapp-btn) {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: #25D366;
-    color: #fff;
-    padding: 0.85rem 2rem;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 1rem;
-    text-decoration: none;
-    transition: background 0.15s;
+  .actions {
+    margin-bottom: 1.5rem;
   }
-  .actions :global(.whatsapp-btn:hover) {
-    background: #20bd5a;
+  .actions :global(.whatsapp-btn) {
+    padding: 0.85rem 2rem;
+    font-size: 1rem;
+    width: 100%;
   }
   .description {
     margin-top: 2rem;
@@ -184,14 +181,15 @@ const formatPrice = (price: number) =>
 </style>
 
 <script>
-  document.querySelectorAll('.thumbnails img')?.forEach((thumb) => {
+  // Fixed: thumbnails stay stable, only main image src changes
+  const main = document.querySelector<HTMLImageElement>('.main-image')
+  const thumbs = document.querySelectorAll<HTMLImageElement>('.thumbnails img')
+
+  thumbs.forEach((thumb) => {
     thumb.addEventListener('click', () => {
-      const main = document.querySelector('.main-image')
-      if (main) {
-        const tmp = main.getAttribute('src')
-        main.setAttribute('src', thumb.getAttribute('src'))
-        thumb.setAttribute('src', tmp)
-      }
+      if (main) main.src = thumb.src
+      thumbs.forEach((t) => t.classList.remove('active'))
+      thumb.classList.add('active')
     })
   })
 </script>

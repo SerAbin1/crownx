@@ -2,7 +2,8 @@
 import Base from '../layouts/Base.astro'
 import Hero from '../components/Hero.astro'
 import CarGrid from '../components/CarGrid.astro'
-import WhatsAppButton from '../components/WhatsAppButton.tsx'
+import WhatsAppButton from '../components/WhatsAppButton.astro'
+import { SITE } from '../config'
 import { getCollection } from 'astro:content'
 
 const allCars = await getCollection('cars')
@@ -33,7 +34,7 @@ const featured = allCars
       <div class="cta-actions">
         <a href="/cars" class="btn-primary">View All Cars</a>
         <WhatsAppButton
-          number="919999999999"
+          number={SITE.whatsapp}
           text="Hi, I'd like to know more about leasing a car with CrownX"
           label="Chat on WhatsApp"
         />
@@ -65,32 +66,27 @@ const featured = allCars
     gap: 1rem;
     justify-content: center;
     flex-wrap: wrap;
+    align-items: center;
   }
-  .cta-actions a, .cta-actions :global(.whatsapp-btn) {
+  .btn-primary {
     padding: 0.85rem 2rem;
     border-radius: 8px;
     font-weight: 600;
     font-size: 1rem;
     text-decoration: none;
-    transition: all 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .btn-primary {
     background: #fff;
     color: #1e3a5f;
+    transition: background 0.2s, transform 0.2s;
+    display: inline-flex;
+    align-items: center;
   }
   .btn-primary:hover {
     background: #f0f4ff;
     transform: translateY(-1px);
   }
+  /* Size match for CTA context */
   .cta-actions :global(.whatsapp-btn) {
-    background: #25D366;
-    color: #fff;
-  }
-  .cta-actions :global(.whatsapp-btn:hover) {
-    background: #20bd5a;
-    transform: translateY(-1px);
+    padding: 0.85rem 2rem;
+    font-size: 1rem;
   }
 </style>

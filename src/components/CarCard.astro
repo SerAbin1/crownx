@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content'
-import WhatsAppButton from './WhatsAppButton'
+import { formatPrice } from '../utils/formatPrice'
+import WhatsAppButton from './WhatsAppButton.astro'
 
 export interface Props {
   car: CollectionEntry<'cars'>
@@ -8,9 +9,6 @@ export interface Props {
 
 const { car } = Astro.props
 const { data } = car
-
-const formatPrice = (price: number) =>
-  new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(price)
 ---
 
 <article class="card">
@@ -37,11 +35,7 @@ const formatPrice = (price: number) =>
     </div>
     <div class="card-actions">
       <a href={`/cars/${car.id}`} class="btn-outline">View Details</a>
-      <WhatsAppButton
-        number={data.whatsappNumber}
-        text={data.whatsappText}
-        label="Inquire"
-      />
+      <WhatsAppButton number={data.whatsappNumber} text={data.whatsappText} label="Inquire" />
     </div>
   </div>
 </article>
@@ -142,7 +136,8 @@ const formatPrice = (price: number) =>
     display: flex;
     gap: 0.5rem;
   }
-  .card-actions a, .card-actions :global(.whatsapp-btn) {
+  /* flex layout only — colors/hover live in WhatsAppButton.astro */
+  .card-actions > :global(*) {
     flex: 1;
     text-align: center;
     padding: 0.6rem 0.75rem;
@@ -150,7 +145,6 @@ const formatPrice = (price: number) =>
     font-size: 0.85rem;
     font-weight: 600;
     text-decoration: none;
-    transition: all 0.15s;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -160,17 +154,10 @@ const formatPrice = (price: number) =>
     border: 1.5px solid #1e3a5f;
     color: #1e3a5f;
     background: transparent;
+    transition: all 0.15s;
   }
   .btn-outline:hover {
     background: #1e3a5f;
     color: #fff;
-  }
-  .card-actions :global(.whatsapp-btn) {
-    background: #25D366;
-    color: #fff;
-    border: none;
-  }
-  .card-actions :global(.whatsapp-btn:hover) {
-    background: #20bd5a;
   }
 </style>

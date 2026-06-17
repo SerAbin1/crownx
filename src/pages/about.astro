@@ -1,14 +1,11 @@
 ---
 import Base from '../layouts/Base.astro'
-import { getCollection, render } from 'astro:content'
+import { getPage } from '../utils/getPage'
 
-const pages = await getCollection('pages')
-const page = pages.find((p) => p.id === 'about')
-
-const { Content } = page ? await render(page) : {}
+const { page, Content } = await getPage('about')
 ---
 
-{page ? (
+{page && Content ? (
   <Base title={page.data.title}>
     <section class="page-section">
       <div class="container">

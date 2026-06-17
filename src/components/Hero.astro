@@ -1,12 +1,19 @@
+---
+import { SITE } from '../config'
+import WhatsAppButton from './WhatsAppButton.astro'
+---
+
 <section class="hero">
   <div class="container">
     <h1>Drive Your Dream Car Today</h1>
     <p>Premium car leasing with flexible terms, all-inclusive packages, and pan-India delivery.</p>
     <div class="hero-actions">
       <a href="/cars" class="btn btn-primary">Browse Cars</a>
-      <a href="https://wa.me/919999999999?text=Hi%2C%20I'm%20interested%20in%20leasing%20a%20car" target="_blank" class="btn btn-whatsapp">
-        Chat on WhatsApp
-      </a>
+      <WhatsAppButton
+        number={SITE.whatsapp}
+        text="Hi, I'm interested in leasing a car"
+        label="Chat on WhatsApp"
+      />
     </div>
   </div>
 </section>
@@ -17,11 +24,6 @@
     color: #fff;
     padding: 5rem 0;
     text-align: center;
-  }
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
   }
   h1 {
     font-size: 2.75rem;
@@ -62,12 +64,14 @@
     background: #f0f4ff;
     transform: translateY(-1px);
   }
-  .btn-whatsapp {
-    background: #25D366;
-    color: #fff;
+  /* WhatsApp button size override for hero context */
+  .hero-actions :global(.whatsapp-btn) {
+    padding: 0.85rem 2rem;
+    font-size: 1rem;
+    transform: none;
+    transition: background 0.2s, transform 0.2s;
   }
-  .btn-whatsapp:hover {
-    background: #20bd5a;
+  .hero-actions :global(.whatsapp-btn:hover) {
     transform: translateY(-1px);
   }
   @media (max-width: 640px) {

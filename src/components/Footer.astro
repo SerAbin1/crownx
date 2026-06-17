@@ -1,9 +1,12 @@
+---
+import { SITE } from '../config'
+---
 
 <footer class="footer">
   <div class="container">
     <div class="footer-grid">
       <div>
-        <h3>CrownX Leasing</h3>
+        <h3>{SITE.name}</h3>
         <p>Premium car leasing solutions in India. Flexible, transparent, and hassle-free.</p>
       </div>
       <div>
@@ -18,20 +21,20 @@
       <div>
         <h4>Contact</h4>
         <ul>
-          <li>+91 99999 99999</li>
-          <li>info@crownxleasing.com</li>
-          <li>Bandra Kurla Complex, Mumbai</li>
+          <li>{SITE.whatsapp}</li>
+          <li>{SITE.email}</li>
+          <li>{SITE.address}</li>
         </ul>
       </div>
       <div>
         <h4>Follow Us</h4>
         <p>
-          <a href="https://wa.me/919999999999" target="_blank">WhatsApp</a>
+          <a href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noopener noreferrer">WhatsApp</a>
         </p>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; {new Date().getFullYear()} CrownX Leasing. All rights reserved.</p>
+      <p>&copy; {new Date().getFullYear()} {SITE.name}. All rights reserved.</p>
     </div>
   </div>
 </footer>
@@ -42,11 +45,6 @@
     color: #cbd5e1;
     padding: 3rem 0 1.5rem;
     margin-top: 4rem;
-  }
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
   }
   .footer-grid {
     display: grid;

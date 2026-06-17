@@ -52,6 +52,13 @@ a {
   margin: 0 0 2rem;
 }
 
+.page-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #111827;
+  margin: 0 0 1.5rem;
+}
+
 /* Content prose - for CMS-rendered markdown */
 .prose {
   max-width: 720px;
