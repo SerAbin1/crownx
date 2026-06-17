@@ -1,16 +1,16 @@
 ---
-title: "BMW X5 xDrive40i"
+title: BMW X5 xDrive40i
 year: 2025
 price: 189000
 wasPrice: 215000
-brand: "BMW"
-model: "X5"
-image: "/images/cars/bmw-x5.jpg"
-fuel: "petrol"
-transmission: "auto"
+brand: BMW
+model: X5
+image: /images/img_20260527_112432.jpg
+fuel: petrol
+transmission: auto
 seats: 5
 whatsappNumber: "+919999999999"
-whatsappText: "Hi, I'm interested in leasing the BMW X5 xDrive40i"
+whatsappText: Hi, I'm interested in leasing the BMW X5 xDrive40i
 featured: true
 order: 1
 ---
