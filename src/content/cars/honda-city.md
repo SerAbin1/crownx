@@ -13,6 +13,17 @@ whatsappNumber: "+919999999999"
 whatsappText: "Hi, I'm interested in leasing the Honda City i-VTEC on CrownX"
 featured: true
 order: 1
+location: "Mumbai"
+downPayment: "None"
+financeBalance: "No balance"
+emi: "None"
+pending: "None"
+insurance: "full"
+leasePeriod: "12-36 Months"
+kms: 8500
+mileage: "17.8 kmpl"
+rcOwnerDirect: true
+expectingAmount: 25000
 ---
 
 The Honda City is the quintessential everyday sedan, offering class-leading comfort, excellent fuel efficiency, and legendary reliability for your daily commutes and family trips.

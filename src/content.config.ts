@@ -19,6 +19,17 @@ const cars = defineCollection({
     whatsappText: z.string().optional(),
     featured: z.boolean().default(false),
     order: z.number().default(0),
+    location: z.string().default('Mumbai'),
+    downPayment: z.string().optional(),
+    financeBalance: z.string().optional(),
+    emi: z.string().optional(),
+    pending: z.string().optional(),
+    insurance: z.enum(['full', 'third']).default('full'),
+    leasePeriod: z.string().default('24 Months'),
+    kms: z.number().int().default(0),
+    mileage: z.string().default('15 kmpl'),
+    rcOwnerDirect: z.boolean().default(true),
+    expectingAmount: z.number().optional(),
   }),
 })
 

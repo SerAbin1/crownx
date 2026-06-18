@@ -13,6 +13,17 @@ whatsappNumber: "+919999999999"
 whatsappText: "Hi, I'm interested in leasing the Hyundai Creta SX on CrownX"
 featured: true
 order: 2
+location: "Delhi NCR"
+downPayment: "None"
+financeBalance: "No balance"
+emi: "None"
+pending: "None"
+insurance: "full"
+leasePeriod: "24-48 Months"
+kms: 12000
+mileage: "18.0 kmpl"
+rcOwnerDirect: true
+expectingAmount: 28000
 ---
 
 India's favorite mid-size SUV. Perfect for families, city commutes, and highway journeys, the Hyundai Creta blends premium tech features with practical, everyday usability.

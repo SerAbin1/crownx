@@ -55,6 +55,23 @@ collections:
       - { label: WhatsApp Message, name: whatsappText, widget: string, required: false }
       - { label: Featured, name: featured, widget: boolean, default: false, required: false }
       - { label: Display Order, name: order, widget: number, default: 0, required: false }
+      - { label: Location, name: location, widget: string }
+      - { label: Down Payment (Optional), name: downPayment, widget: string, required: false }
+      - { label: Finance Balance (Optional), name: financeBalance, widget: string, required: false }
+      - { label: Monthly EMI (Optional), name: emi, widget: string, required: false }
+      - { label: Pending Loans/Dues (Optional), name: pending, widget: string, required: false }
+      - {
+          label: Insurance Type,
+          name: insurance,
+          widget: select,
+          options: [ { label: Full Insurance, value: full }, { label: Third Party, value: third } ],
+          default: full
+        }
+      - { label: Lease Period, name: leasePeriod, widget: string }
+      - { label: Kilometers Driven (Kms), name: kms, widget: number, value_type: int }
+      - { label: Mileage, name: mileage, widget: string }
+      - { label: RC Owner Direct, name: rcOwnerDirect, widget: boolean, default: true }
+      - { label: Expecting Amount (₹), name: expectingAmount, widget: number, required: false }
       - { label: Description, name: body, widget: markdown }
 
   - name: pages

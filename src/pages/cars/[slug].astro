@@ -100,6 +100,67 @@ const whatsappUrl = `https://wa.me/${data.whatsappNumber.replace(/[^0-9]/g, '')}
             Inquire on WhatsApp
           </a>
 
+          <!-- Deal Details -->
+          <div class="deal-details">
+            <h3 class="deal-title">Deal & Vehicle Details</h3>
+            <div class="deal-grid">
+              <div class="deal-item">
+                <span class="deal-label">Location</span>
+                <span class="deal-val">{data.location}</span>
+              </div>
+              <div class="deal-item">
+                <span class="deal-label">Lease Period</span>
+                <span class="deal-val">{data.leasePeriod}</span>
+              </div>
+              <div class="deal-item">
+                <span class="deal-label">Kms Driven</span>
+                <span class="deal-val">{data.kms.toLocaleString('en-IN')} km</span>
+              </div>
+              <div class="deal-item">
+                <span class="deal-label">Mileage</span>
+                <span class="deal-val">{data.mileage}</span>
+              </div>
+              <div class="deal-item">
+                <span class="deal-label">Insurance</span>
+                <span class="deal-val cap">{data.insurance}</span>
+              </div>
+              <div class="deal-item">
+                <span class="deal-label">RC Owner Direct</span>
+                <span class="deal-val">{data.rcOwnerDirect ? 'Yes' : 'No'}</span>
+              </div>
+              {data.downPayment && (
+                <div class="deal-item">
+                  <span class="deal-label">Down Payment</span>
+                  <span class="deal-val">{data.downPayment}</span>
+                </div>
+              )}
+              {data.financeBalance && (
+                <div class="deal-item">
+                  <span class="deal-label">Finance Balance</span>
+                  <span class="deal-val">{data.financeBalance}</span>
+                </div>
+              )}
+              {data.emi && (
+                <div class="deal-item">
+                  <span class="deal-label">Monthly EMI</span>
+                  <span class="deal-val">{data.emi}</span>
+                </div>
+              )}
+              {data.pending && (
+                <div class="deal-item">
+                  <span class="deal-label">Pending</span>
+                  <span class="deal-val">{data.pending}</span>
+                </div>
+              )}
+              {data.expectingAmount && (
+                <div class="deal-item">
+                  <span class="deal-label">Expecting Amount</span>
+                  <span class="deal-val">{formatPrice(data.expectingAmount)}</span>
+                </div>
+              )}
+            </div>
+          </div>
+
           <!-- Description / Prose -->
           <div class="description prose">
             <Content />
@@ -366,6 +427,59 @@ const whatsappUrl = `https://wa.me/${data.whatsappNumber.replace(/[^0-9]/g, '')}
 
   .inquire-btn:hover svg {
     color: var(--whatsapp-green);
+  }
+
+  /* Deal Details */
+  .deal-details {
+    margin-bottom: 3rem;
+    padding: 2rem;
+    border: 1px solid var(--border-hairline);
+    background: var(--bg-secondary);
+  }
+
+  .deal-title {
+    font-family: var(--font-sans);
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-primary);
+    margin: 0 0 1.5rem 0;
+  }
+
+  .deal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem 2rem;
+  }
+
+  .deal-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed var(--border-hairline);
+    padding-bottom: 0.5rem;
+  }
+
+  .deal-label {
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .deal-val {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 480px) {
+    .deal-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   /* Description */
