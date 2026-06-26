@@ -9,13 +9,15 @@ export interface Props {
 const { car } = Astro.props
 const { data } = car
 
-const whatsappUrl = `https://wa.me/${data.whatsappNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(data.whatsappText ?? `Hi, I'm interested in leasing the ${data.title}`)}`
+const phone = data.whatsappNumber?.replace(/[^0-9]/g, '')
+const message = data.whatsappText ?? `Hi, I'm interested in leasing the ${data.title ?? 'this car'}`
+const whatsappUrl = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(message)}` : null
 ---
 
 <article class="card">
   <a href={`/cars/${car.id}`} class="card-image-wrapper">
     <div class="card-image">
-      <img src={data.image} alt={data.title} loading="lazy" />
+      {data.image && <img src={data.image} alt={data.title ?? 'Car'} loading="lazy" />}
       {data.featured && <span class="badge">Verified Owner</span>}
     </div>
   </a>
@@ -23,16 +25,16 @@ const whatsappUrl = `https://wa.me/${data.whatsappNumber.replace(/[^0-9]/g, '')}
   <div class="card-body">
     <div class="card-header">
       <a href={`/cars/${car.id}`} class="card-title-link">
-        <h3>{data.title}</h3>
+        <h3>{data.title ?? 'Untitled Car'}</h3>
       </a>
       <div class="specs">
-        <span>{data.year}</span>
+        <span>{data.year ?? 'N/A'}</span>
         <span class="dot">&bull;</span>
-        <span class="spec-text">{data.fuel}</span>
+        <span class="spec-text">{data.fuel ?? 'N/A'}</span>
         <span class="dot">&bull;</span>
-        <span class="spec-text">{data.transmission}</span>
+        <span class="spec-text">{data.transmission ?? 'N/A'}</span>
         <span class="dot">&bull;</span>
-        <span>{data.seats} Seats</span>
+        <span>{data.seats ?? 'N/A'} Seats</span>
       </div>
     </div>
     
@@ -40,14 +42,16 @@ const whatsappUrl = `https://wa.me/${data.whatsappNumber.replace(/[^0-9]/g, '')}
       <div class="card-pricing">
         {data.wasPrice && <span class="was">{formatPrice(data.wasPrice)}</span>}
         <div class="price">
-          <span class="current">{formatPrice(data.price)}</span>
+          <span class="current">{data.price ? formatPrice(data.price) : 'N/A'}</span>
           <span class="per">/ month</span>
         </div>
       </div>
       
       <div class="card-actions">
         <a href={`/cars/${car.id}`} class="action-btn btn-specs">Specs</a>
-        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="action-btn btn-inquire">Inquire</a>
+        {whatsappUrl && (
+          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="action-btn btn-inquire">Inquire</a>
+        )}
       </div>
     </div>
   </div>

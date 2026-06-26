@@ -29,7 +29,7 @@ const logoImage = homePage?.data.logoImage
       <li><a href="/">Home</a></li>
       <li><a href="/cars">Cars</a></li>
       {sorted.map((page) => (
-        <li><a href={`/${page.id}`}>{page.data.title}</a></li>
+        <li><a href={`/${page.id}`}>{page.data.title ?? page.id}</a></li>
       ))}
     </ul>
   </div>
@@ -67,10 +67,12 @@ const logoImage = homePage?.data.logoImage
     text-transform: uppercase;
   }
   .logo-img {
-    height: 32px;
+    height: 132px;
     width: auto;
     object-fit: contain;
     display: block;
+    margin-top: auto;
+    margin-bottom: auto;
   }
   .logo-icon {
     color: var(--accent-gold);

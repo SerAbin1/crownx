@@ -6,7 +6,7 @@ const { page, Content } = await getPage('about')
 ---
 
 {page && Content ? (
-  <Base title={page.data.title} description="Learn about CrownX — India's everyday car leasing marketplace connecting lessors with lessees on flexible terms.">
+  <Base title={page.data.title ?? 'About Us'} description="Learn about CrownX — India's everyday car leasing marketplace connecting lessors with lessees on flexible terms.">
     <!-- Page Hero -->
     <section class="about-hero">
       <div class="container">

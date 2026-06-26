@@ -8,7 +8,7 @@ const { page, Content } = await getPage('contact')
 ---
 
 {page && Content ? (
-  <Base title={page.data.title} description="Get in touch with CrownX Leasing. Schedule a consultation, inquire about our fleet, or chat with us on WhatsApp.">
+  <Base title={page.data.title ?? 'Contact Us'} description="Get in touch with CrownX Leasing. Schedule a consultation, inquire about our fleet, or chat with us on WhatsApp.">
     <!-- Page Hero -->
     <section class="contact-hero">
       <div class="container">
